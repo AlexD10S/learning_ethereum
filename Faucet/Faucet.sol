@@ -1,3 +1,4 @@
+pragma solidity ^0.5.5;
 
 contract Faucet {
 
@@ -20,7 +21,7 @@ contract Faucet {
     //Fallback or default function. Called if the transaction
     //that triggered the contract didn't name any of the 
     //declared functions in the contract, or didn't contain data.
-    function () public payable {}
+    function () external payable {}
     //When someone send money with no data specifying function
     //to call, it accepted the money into the contract's balance.
 
