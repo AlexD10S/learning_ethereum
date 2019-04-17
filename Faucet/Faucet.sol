@@ -2,7 +2,10 @@ pragma solidity ^0.5.5;
 
 contract Faucet {
 
-    address owner;
+    //address owner;
+    //new in solidity 0.5, there are 2 types: address and address payable
+    //you just can send money to address payable
+    address payable owner;
 
     constructor() public{
         //We set us, as the owner of the smart contract
@@ -27,9 +30,15 @@ contract Faucet {
         //transfer is a built-in function that transfers ether
         //from the current contract to the address of the sender.
     }
+    //Function modifier, to create conditions
+    modifier onlyOwner {
+        require(msg.sender == owner,"Only the contract owner can call this function");
+        _;
+    }   
     //Method to delete the contract
-    function destroy() public {
-	    require(msg.sender == owner);
+    function destroy() public onlyOwner {
+	    // require(msg.sender == owner);
+        //delete the contract, and the remain balance go to our address.
 	    selfdestruct(owner);
     }
 
