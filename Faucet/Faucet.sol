@@ -7,6 +7,9 @@ contract Faucet {
     //you just can send money to address payable
     address payable owner;
 
+    event Withdrawal(address indexed to, uint amount);
+	event Deposit(address indexed from, uint amount);
+
     constructor() public{
         //We set us, as the owner of the smart contract
 		owner = msg.sender;
@@ -29,6 +32,7 @@ contract Faucet {
         msg.sender.transfer(withdraw_amount);
         //transfer is a built-in function that transfers ether
         //from the current contract to the address of the sender.
+        emit Withdrawal(msg.sender, withdraw_amount);
     }
     //Function modifier, to create conditions
     modifier onlyOwner {
@@ -45,7 +49,9 @@ contract Faucet {
     //Fallback or default function. Called if the transaction
     //that triggered the contract didn't name any of the 
     //declared functions in the contract, or didn't contain data.
-    function () external payable {}
+    function () external payable {
+        emit Deposit(msg.sender, msg.value);
+    }
     //When someone send money with no data specifying function
     //to call, it accepted the money into the contract's balance.
 
